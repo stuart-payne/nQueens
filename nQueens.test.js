@@ -1,4 +1,4 @@
-const {getX, getY, safe, solveQueens} = require('./nQueens.js');
+const {getX, getY, safe, solveQueens} = require("./nQueens.js");
 const {isEqual} = require("lodash");
 
 const assert = (func, params, expected, message) => {
