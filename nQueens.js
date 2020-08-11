@@ -12,28 +12,26 @@
 const log = console.log;
 
 const getX = (pos, width) => {
-    const mod = pos % width;
-    return mod === 0 ? width : mod;
+  const mod = pos % width;
+  return mod === 0 ? width : mod;
 };
 
 const getY = (pos, width) => Math.ceil(pos / width);
 
-
 //determines whether a position is safe from a queen
 
 const safe = (pos, queenPos, width, debug = false) => {
+  const [x, y] = [getX(pos, width), getY(pos, width)];
+  const [qX, qY] = [getX(queenPos, width), getY(queenPos, width)];
 
-    const [x, y] = [getX(pos, width), getY(pos, width)];
-    const [qX, qY] = [getX(queenPos, width), getY(queenPos, width)];
+  //vert and horiz lines
+  if (x === qX || y === qY) return false;
+  //diags
+  if (x - y === qX - qY || x + y === qX + qY) return false;
 
-    //vert and horiz lines
-    if(x === qX || y === qY) return false;
-    //diags
-    if(x - y === qX - qY || x + y === qX + qY) return false;
+  if (debug) log({ x, y, qX, qY });
 
-    if(debug) log({x, y, qX, qY});
-
-    return true;
+  return true;
 };
 
 /*
@@ -43,14 +41,14 @@ const safe = (pos, queenPos, width, debug = false) => {
 */
 
 const placeQueens = (start, width) => {
-    const queens = [start];
-    for(let i = 1; i <= width * width; i++) {
-        const results = queens.map(queen => safe(i, queen, width));
-        if(results.filter(res => res === false).length === 0) {
-            queens.push(i);
-        }
+  const queens = [start];
+  for (let i = 1; i <= width * width; i++) {
+    const results = queens.map((queen) => safe(i, queen, width));
+    if (results.filter((res) => res === false).length === 0) {
+      queens.push(i);
     }
-    return queens;
+  }
+  return queens;
 };
 
 /*
@@ -58,15 +56,15 @@ const placeQueens = (start, width) => {
 */
 
 const printBoard = (queens, width) => {
-    const boardString = [];
-    for(let i = 1; i <= width * width; i++) {
-        if(i % width === 1){
-            boardString.push("\n");
-        };
-        queens.includes(i) ? boardString.push("@") : boardString.push("_");
+  const boardString = [];
+  for (let i = 1; i <= width * width; i++) {
+    if (i % width === 1) {
+      boardString.push("\n");
     }
-    log(boardString.join(','));
-}
+    queens.includes(i) ? boardString.push("@") : boardString.push("_");
+  }
+  log(boardString.join(","));
+};
 
 /*
   runs placeQueens starting at the first position on the board then
@@ -75,19 +73,19 @@ const printBoard = (queens, width) => {
 */
 
 const solveQueens = (n) => {
-    for(let start = 1; start <= n*n; start++) {
-        const result = placeQueens(start, n);
-        if(result.length === n){
-            printBoard(result, n);
-            break;
-        }
+  for (let start = 1; start <= n * n; start++) {
+    const result = placeQueens(start, n);
+    if (result.length === n) {
+      printBoard(result, n);
+      break;
     }
+  }
 };
 
 module.exports = {
-    getX, 
-    getY, 
-    safe, 
-    placeQueens,
-    solveQueens
+  getX,
+  getY,
+  safe,
+  placeQueens,
+  solveQueens,
 };

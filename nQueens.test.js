@@ -1,11 +1,11 @@
-const {getX, getY, safe, solveQueens} = require("./nQueens.js");
-const {isEqual} = require("lodash");
+const { getX, getY, safe, solveQueens } = require("./nQueens.js");
+const { isEqual } = require("lodash");
 
 const assert = (func, params, expected, message) => {
-   const result = func(...params);
-   let testStr = isEqual(result, expected) ? "Success" : "Failure";
-   console.log(`${message}: ${testStr}`);
-}
+  const result = func(...params);
+  const testStr = isEqual(result, expected) ? "Success" : "Failure";
+  console.log(`${message}: ${testStr}`);
+};
 
 //getX tests
 
