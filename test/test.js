@@ -1,50 +1,49 @@
 const assert = require("assert");
 const { getX, getY, safe } = require("../nQueens.js");
 
+const getTestGenerator = (params, func) => {
+  params.forEach((val) => {
+    it(`should return ${val.returnVal} when given value of ${val.value} and width of ${val.width}`, function () {
+      assert.equal(func(val.value, val.width), val.expected);
+    });
+  });
+};
+
 describe("Tests for functions used in nQueens solution", function () {
   describe("#getX()", function () {
-    it("should return 2 when given value of 6 and width of 4", function () {
-      assert.equal(getX(6, 4), 2);
-    });
-
-    it("should return 2 when given value 10 and width being 4", function () {
-      assert.equal(getX(6, 4), 2);
-    });
+    const testParams = [
+      { value: 6, width: 4, expected: 2 },
+      { value: 10, width: 4, expected: 2 },
+    ];
+    getTestGenerator(testParams, getX);
   });
 
   describe("getY", function () {
-    it("should return 3 when given value of 12 and width of 4", function () {
-      assert.equal(getY(12, 4), 3);
-    });
-
-    it("should return 3 when given value of 9 and width of 4", function () {
-      assert.equal(getY(9, 4), 3);
-    });
-
-    it("should return 5 when given value of 24 and width of 5", function () {
-      assert.equal(getY(24, 5), 5);
-    });
+    const testParams = [
+      { value: 12, width: 4, expected: 3 },
+      { value: 9, width: 4, expected: 3 },
+      { value: 24, width: 5, expected: 5 },
+    ];
+    getTestGenerator(testParams, getY);
   });
 
   describe("#safe()", function () {
-    it("should return true when given values 1 and 10 and width 4", function () {
-      assert.equal(safe(1, 10, 4), true);
-    });
+    const testParams = [
+      { pos: 1, queenPos: 10, width: 4, expected: true },
+      { pos: 1, queenPos: 6, width: 4, expected: false },
+      { pos: 5, queenPos: 15, width: 4, expected: false },
+      { pos: 1, queenPos: 12, width: 4, expected: true },
+      { pos: 8, queenPos: 11, width: 4, expected: false },
+      { pos: 1, queenPos: 7, width: 5, expected: false }
+    ];
 
-    it("should return false when given values 1 and 10 with width 4", function () {
-      assert.equal(safe(1, 6, 4), false);
-    });
-
-    it("should return true when given values 5 and 15 with width 4", function () {
-      assert.equal(safe(5, 15, 4), false);
-    });
-
-    it("should return true when given values 1 and 12 with width 4", function () {
-      assert.equal(safe(1, 12, 4), true);
-    });
-
-    it("should return false when given values 5 and 15 with width 4", function () {
-      assert.equal(safe(8, 11, 4), false);
+    testParams.forEach((params) => {
+      it(`it should return ${params.expected} when given values ${params.pos} and ${params.queenPos} abd width ${params.width}`, function () {
+        assert.equal(
+          safe(params.pos, params.queenPos, params.width),
+          params.expected
+        );
+      });
     });
   });
 });
